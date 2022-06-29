@@ -1,0 +1,50 @@
+<mat-card>
+  <mat-toolbar color="primary">
+    Cats to adopt S2
+  </mat-toolbar>
+  <div *ngIf="cats$ | async as cats; else loading">
+    <table mat-table [dataSource]="cats" class="mat-elevation-z8">
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Cat </th>
+        <td mat-cell *matCellDef="let cat"> {{ cat.name }} </td>
+      </ng-container>
+
+      <!-- Personality Column -->
+      <ng-container matColumnDef="personality">
+        <th mat-header-cell *matHeaderCellDef> Personality </th>
+        <td mat-cell *matCellDef="let cat"> {{cat.personality}}
+          <mat-icon aria-hidden="false" aria-label="Cat personality">
+            {{cat.personality | personality}}
+          </mat-icon>
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+       <mat-header-cell *matHeaderCellDef>
+        <button mat-mini-fab color="accent" aria-label="Add cat">
+          <mat-icon (click)="onAdd()">add</mat-icon>
+        </button>
+       </mat-header-cell>
+       <mat-cell *matCellDef="let cat">
+        <button mat-icon-button color="primary" aria-label="Edit cat">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" aria-label="Remove cat">
+          <mat-icon>delete</mat-icon>
+        </button>
+       </mat-cell>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  <ng-template #loading>
+    <div class="loading-spinner">
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
+</mat-card>
